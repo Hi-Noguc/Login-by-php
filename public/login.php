@@ -1,44 +1,59 @@
 <?php
+ini_set( 'display_errors', "On" );
 session_start();
+require_once'../classes/UserLogic.php';
 
-$err=$_SESSION;
-//セッションを消すために空の配列を入れる
-$_SESSION =array();
-session_destroy();
+// エラーメッセージを配列に入れてく
+$err=[];
+//バリデーション filter_inputと正規表現
+
+
+if(!$email=filter_input(INPUT_POST,'email'))
+{
+    $err['email']='メールアドレスを記入してください';
+}
+
+if(!$password=filter_input(INPUT_POST,'password'))
+{
+    $err['password']='パスワードを記入してください';
+}
+
+if(count($err)>0)
+{
+    //エラーがあったら戻す
+    $_SESSION=$err;
+    header('Location: login_form.php');
+    return;
+}
+    //ログイン成功の処理
+$result =UserLogic::login($email,$password);
+//ログイン失敗の処理
+if(!$result)
+{
+    header('Location: login_form.php');
+    return;
+}
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ログイン画面</title>
+    <title>ログイン完了</title>
 </head>
 <body>
-    <h2>ログインフォーム</h2>
-    <?php if (isset($err['msg'])):?> 
-                <p><?php echo $err['msg']; ?></p>
-           <?php endif;?>
-    <form action="top.php" method="POST">
-       <p>
-           <label for="email">メールアドレス</label>
-           <input type="email" name="email">
-           <?php if (isset($err['email'])):?> 
-                <p><?php echo $err['email']; ?></p>
-           <?php endif;?>
-       </p>
-       <p>
-           <label for="password">パスワード</label>
-           <input type="password" name="password">
-           <?php if (isset($err['password'])):?> 
-                <p><?php echo $err['password']; ?></p>
-           <?php endif;?>
-       </p>
-       <p>
-           <input type="submit" value="ログイン">
-       </p>
-       <a href="signup_form.php">新規登録はこちら</a>
-    </form>
+    <h2>ログイン完了</h2>
+<?php if(count($err)>0):?>
+    <?php foreach($err as $e):?>
+        <p><?php echo $e ?></p>
+    <?php endforeach ?>
+<?php else :?>
+<p>ログインが完了しました</p>
+<?php endif ?>
+<a href="./mypage.php">マイページへ</a>
     
 </body>
 </html>

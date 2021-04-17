@@ -1,8 +1,18 @@
 <?php
 ini_set( 'display_errors', "On" );
+session_start();
 require_once'../classes/UserLogic.php';
 // エラーメッセージを配列に入れてく
 $err=[];
+
+$token=filter_input(INPUT_POST,'csrf_token');
+//トークンがない、もしくは一致しない場合中止
+if(!isset($_SESSION['csrf_token']) || $token!==$_SESSION['csrf_token'])
+{
+    exit('不正なリクエスト');
+}
+unset($_SESSION['csrf_token']);
+
 //バリデーション filter_inputと正規表現
 
 if(!$username=filter_input(INPUT_POST,'username'))

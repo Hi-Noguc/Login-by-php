@@ -68,7 +68,7 @@ class UserLogic
         
     }
 
-         /**
+    /**
      * emailからユーザーを取得
      * @param string $email
      * @return arrray|bool $user|false
@@ -95,6 +95,31 @@ class UserLogic
         {
             return false;
         }
+    }
+
+    /**
+     * ログインチェック
+     * @param void
+     * @return bool
+     */
+    public static function checkLogin()
+    {
+        $result=false;
+        //セッションにログインユーザーが入っていなかったらfalse
+        if(isset($_SESSION['login_user'])&& $_SESSION['login_user']['id']>0)
+        {
+            return $result=true;
+        }
+        return$result;
+    }
+
+    /**
+     * ログアウト処理
+     */
+    public static function logout()
+    {
+        $_SESSION=array();
+        session_destroy();
     }
 }
 ?>
