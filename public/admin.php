@@ -1,5 +1,6 @@
 <?php
-//営業、担当者用ページ
+//管理者用マイページ
+
 ini_set( 'display_errors', "On" );
 session_start();
 require_once'../classes/UserLogic.php';
@@ -23,17 +24,15 @@ $login_user=$_SESSION['login_user'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>担当画面</title>
+    <title>管理者画面</title>
 </head>
 <body>
-<h2>担当画面</h2>
+<h2>管理者画面</h2>
 <p>ログインユーザー:<?php echo h($login_user['name']);?></p>
 <p>メールアドレス<?php echo h($login_user['email']);?></p>
 <form action="logout.php" method="POST">
+<p>担当割り振り</p>
 <input type="submit" name="logout"value="ログアウト">
 </fprm>    
 </body>
-<p>担当客先</p>
-<p>割り振り案件</p>
-<p>編集履歴</p>
 </html>

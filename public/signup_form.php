@@ -11,6 +11,7 @@ if($result){
 $login_err=isset($_SESSION['login_err']) ? $_SESSION['login_err'] : null;
 unset($_SESSION['login_err']);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,6 +42,13 @@ unset($_SESSION['login_err']);
            <label for="password_conf">パスワード確認</label>
            <input type="password_conf" name="password_conf">
        </p>
+       <p>カテゴリ：</p>
+        <select name="category">
+            <option value="1">一般</option>
+            <option value="2">得意先</option>
+            <option value="3">営業部</option>
+            <option value="4">管理部</option>
+        </select>
        <p>
            <input type="hidden" name="csrf_token" value="<?php echo h(setToken());?>">
        </p>

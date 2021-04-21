@@ -13,8 +13,8 @@ class UserLogic
     public static function createUser($userData)
     {
         $result=false;
-        $sql='INSERT INTO users(name,email,password)
-                VALUES(?,?,?)';
+        $sql='INSERT INTO users(name,email,password,category)
+                VALUES(?,?,?,?)';
 
         //ユーザーデータを配列に入れる
         $arr=[];
@@ -22,6 +22,7 @@ class UserLogic
         $arr[]=$userData['email'];
         $arr[]=password_hash($userData['password'],
         PASSWORD_DEFAULT);
+        $arr[]=$userData['category'];
 
         try
         {

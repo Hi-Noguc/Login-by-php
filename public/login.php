@@ -53,7 +53,14 @@ if(!$result)
 <?php else :?>
 <p>ログインが完了しました</p>
 <?php endif ?>
-<a href="./mypage.php">マイページへ</a>
-    
+<!-- 受け取ったidからカテゴリを判別して該当ページに遷移させる -->
+<?php $userData=UserLogic::getUserByEmail($email);?>
+
+<?php if ($userData['category']==='1') $page='./consumer.php';
+elseif($userData['category']==='2') $page='./customer.php';
+elseif($userData['category']==='3') $page='./mypage.php';
+elseif ($userData['category']==='4') $page='./admin.php';?>
+<a href="<?php echo $page?>">マイページへ</a>
+
 </body>
 </html>
